@@ -4,7 +4,7 @@ const lightColors = {
   primary: '#7C3AED', // Modern mor
   primaryLight: '#8B5CF6',
   primaryDark: '#6D28D9',
-  secondary: '#10B981', // Modern yeşil
+  secondary: '#10B981', // Modern green
   background: '#F9FAFB',
   surface: '#FFFFFF',
   error: '#EF4444',

@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    // Habit tamamlanma durumunu kontrol eden method
+    // Habit completion status check method
     Habit.prototype.isCompleted = function() {
         if (!this.last_tracked) return false;
 
@@ -45,14 +45,14 @@ module.exports = (sequelize, DataTypes) => {
         const lastTracked = new Date(this.last_tracked);
 
         if (this.frequency === 'daily') {
-            // Günlük habitler için: Aynı günde mi kontrol et
+            // For daily habits: Check if it's the same day
             return (
                 lastTracked.getFullYear() === now.getFullYear() &&
                 lastTracked.getMonth() === now.getMonth() &&
                 lastTracked.getDate() === now.getDate()
             );
         } else if (this.frequency === 'weekly') {
-            // Haftalık habitler için: Son 7 gün içinde mi kontrol et
+            // For weekly habits: Check if it's within the last 7 days
             const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
             return lastTracked >= oneWeekAgo;
         }

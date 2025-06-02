@@ -10,8 +10,8 @@ const screenWidth = Dimensions.get('window').width;
 
 // Dummy data
 const habits = [
-  { id: 1, title: 'Su İçmek', completed: 25, streak: 7, lastCompleted: '2024-06-10' },
-  { id: 2, title: 'Yürüyüş', completed: 18, streak: 3, lastCompleted: '2024-06-09' },
+  { id: 1, title: 'Drink Water', completed: 25, streak: 7, lastCompleted: '2024-06-10' },
+  { id: 2, title: 'Walking', completed: 18, streak: 3, lastCompleted: '2024-06-09' },
   { id: 3, title: 'Kitap Okumak', completed: 30, streak: 10, lastCompleted: '2024-06-10' },
 ];
 const totalCompleted = habits.reduce((sum, h) => sum + h.completed, 0);
@@ -19,24 +19,24 @@ const bestStreak = Math.max(...habits.map(h => h.streak));
 const activeHabits = habits.length;
 const mostCompleted = habits.reduce((prev, curr) => (prev.completed > curr.completed ? prev : curr));
 
-const last7Days = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-const last7Data = [1, 1, 0, 1, 1, 0, 1]; // Dummy: 1=başarılı, 0=başarısız
+const last7Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const last7Data = [1, 1, 0, 1, 1, 0, 1]; // Dummy: 1=success, 0=failure
 const weeklySuccess = (last7Data.filter(x => x === 1).length / 7) * 100;
 
 export default function StatisticsScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 32 }}>
-      <ThemedText type="title" style={styles.header}>İstatistikler</ThemedText>
+      <ThemedText type="title" style={styles.header}>Statistics</ThemedText>
       <View style={styles.row}>
-        <StatCard icon="house.fill" label="Toplam Tamamlanan" value={totalCompleted} color="#4CAF50" />
-        <StatCard icon="chevron.right" label="En Uzun Streak" value={bestStreak} color="#FF9800" />
+        <StatCard icon="house.fill" label="Total Completed" value={totalCompleted} color="#4CAF50" />
+        <StatCard icon="chevron.right" label="Best Streak" value={bestStreak} color="#FF9800" />
       </View>
       <View style={styles.row}>
-        <StatCard icon="paperplane.fill" label="Aktif Alışkanlık" value={activeHabits} color="#2196F3" />
-        <StatCard icon="chevron.left.forwardslash.chevron.right" label="En Çok Tamamlanan" value={mostCompleted.title} color="#FFD700" />
+        <StatCard icon="paperplane.fill" label="Active Habits" value={activeHabits} color="#2196F3" />
+        <StatCard icon="chevron.left.forwardslash.chevron.right" label="Most Completed" value={mostCompleted.title} color="#FFD700" />
       </View>
       <View style={styles.chartContainer}>
-        <ThemedText type="subtitle" style={styles.chartTitle}>Son 7 Günlük Başarı</ThemedText>
+        <ThemedText type="subtitle" style={styles.chartTitle}>Last 7 Days Success</ThemedText>
         <BarChart
           data={{
             labels: last7Days,
@@ -50,14 +50,14 @@ export default function StatisticsScreen() {
           chartConfig={chartConfig}
           style={styles.chart}
         />
-        <ThemedText style={styles.successText}>Başarı Oranı: %{weeklySuccess.toFixed(0)}</ThemedText>
+        <ThemedText style={styles.successText}>Success Rate: {weeklySuccess.toFixed(0)}%</ThemedText>
       </View>
       <View style={styles.chartContainer}>
-        <ThemedText type="subtitle" style={styles.chartTitle}>Alışkanlık Bazında Tamamlanma</ThemedText>
+        <ThemedText type="subtitle" style={styles.chartTitle}>Completion by Habit</ThemedText>
         <ProgressChart
           data={{
             labels: habits.map(h => h.title),
-            data: habits.map(h => h.completed / 30), // 30 gün üzerinden dummy
+            data: habits.map(h => h.completed / 30), // Dummy data over 30 days
           }}
           width={screenWidth - 32}
           height={180}
@@ -68,7 +68,7 @@ export default function StatisticsScreen() {
         />
       </View>
       <View style={styles.listContainer}>
-        <ThemedText type="subtitle" style={styles.chartTitle}>Son Tamamlananlar</ThemedText>
+        <ThemedText type="subtitle" style={styles.chartTitle}>Completed Habits</ThemedText>
         {habits.map(h => (
           <ThemedView key={h.id} style={styles.listItem}>
             <IconSymbol name={"house.fill" as IconSymbolName} size={22} color="#4CAF50" style={{ marginRight: 8 }} />

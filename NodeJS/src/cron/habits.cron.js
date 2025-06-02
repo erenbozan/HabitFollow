@@ -2,12 +2,12 @@ const cron = require('node-cron');
 const { Habit } = require('../models');
 const { Op } = require('sequelize');
 
-// Her gün gece yarısı çalışacak cron job (daily habits için)
+// Cron job that runs at midnight every day (for daily habits)
 const resetDailyHabits = cron.schedule('0 0 * * *', async () => {
     try {
         console.log('Running daily habits reset cron job...');
         
-        // Günlük alışkanlıkları bul ve last_tracked'ı null yap
+        // Find daily habits and set last_tracked to null
         const result = await Habit.update(
             { last_tracked: null },
             {
@@ -26,15 +26,15 @@ const resetDailyHabits = cron.schedule('0 0 * * *', async () => {
     }
 }, {
     scheduled: true,
-    timezone: "Europe/Istanbul" // Türkiye saat dilimi
+    timezone: "Europe/Istanbul" // Local timezone
 });
 
-// Her Pazartesi gece yarısı çalışacak cron job (weekly habits için)
+// Cron job that runs at midnight every Monday (for weekly habits)
 const resetWeeklyHabits = cron.schedule('0 0 * * 1', async () => {
     try {
         console.log('Running weekly habits reset cron job...');
         
-        // Haftalık alışkanlıkları bul ve last_tracked'ı null yap
+        // Find weekly habits and set last_tracked to null
         const result = await Habit.update(
             { last_tracked: null },
             {
@@ -53,7 +53,7 @@ const resetWeeklyHabits = cron.schedule('0 0 * * 1', async () => {
     }
 }, {
     scheduled: true,
-    timezone: "Europe/Istanbul" // Türkiye saat dilimi
+    timezone: "Europe/Istanbul" // Local timezone
 });
 
 module.exports = {
