@@ -143,16 +143,8 @@ RATE_LIMIT_MAX_REQUESTS=100
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Eren Bozan - Initial work
 
-## 🙏 Acknowledgments
-
-- Expo team for the amazing framework
-- React Native community
-- All contributors who helped with the project 
